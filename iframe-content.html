@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        input[type="text"] {
+            padding: 12px;
+            font-size: 18px; /* Increased font size */
+            width: 80%;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            font-size: 18px; /* Increased font size */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff; /* White background */
+            width: 80%;
+            max-width: 1000px; /* Limit width for readability */
+            white-space: pre-wrap; /* Preserve line breaks */
+            overflow-wrap: break-word; /* Wrap long lines */
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center; color: #333;">Enter Text and Generate</h2>
+    <input type="text" id="inputText" placeholder="Enter text">
+    <button onclick="sendText()">Generate</button>
+    <div id="output"></div>
+
+    <script>
+        async function sendText() {
+            const inputText = document.getElementById('inputText').value;
+            const response = await fetch('http://localhost:8000/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: inputText })
+            });
+            const data = await response.json();
+            document.getElementById('output').innerText = data.output;
+        }
+    </script>
+</body>
+</html>
